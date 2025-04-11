@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import HeadlineForm from "@/components/HeadlineForm";
 import HeadlineResults from "@/components/HeadlineResults";
 import EmptyState from "@/components/EmptyState";
+import Footer from "@/components/Footer";
 import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
@@ -95,37 +96,40 @@ Kurallar:
   };
 
   return (
-    <div className="container mx-auto py-6 px-4 md:py-10 max-w-4xl">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Haber Başlığı Ustası</h1>
-        <p className="text-muted-foreground mt-2">
-          Yaratıcı ve etkili haber başlıkları saniyeler içinde
-        </p>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <div className="container mx-auto py-6 px-4 md:py-10 max-w-4xl flex-grow">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold tracking-tight text-[#00255A]">Haber Başlığı Ustası</h1>
+          <p className="text-muted-foreground mt-2">
+            Yaratıcı ve etkili haber başlıkları saniyeler içinde
+          </p>
+        </div>
 
-      <div className="grid gap-8 md:grid-cols-[1fr_1fr] items-start">
-        <Card>
-          <CardHeader>
-            <CardTitle>Başlık Oluştur</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <HeadlineForm onSubmit={handleSubmit} isLoading={isLoading} />
-          </CardContent>
-        </Card>
+        <div className="grid gap-8 md:grid-cols-[1fr_1fr] items-start">
+          <Card className="border-[#00255A]/20">
+            <CardHeader className="bg-gradient-to-r from-[#00255A]/10 to-transparent">
+              <CardTitle className="text-[#00255A]">Başlık Oluştur</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <HeadlineForm onSubmit={handleSubmit} isLoading={isLoading} />
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Sonuçlar</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {headlines.length > 0 ? (
-              <HeadlineResults headlines={headlines} />
-            ) : (
-              <EmptyState />
-            )}
-          </CardContent>
-        </Card>
+          <Card className="border-[#00255A]/20">
+            <CardHeader className="bg-gradient-to-r from-[#00255A]/10 to-transparent">
+              <CardTitle className="text-[#00255A]">Sonuçlar</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {headlines.length > 0 ? (
+                <HeadlineResults headlines={headlines} />
+              ) : (
+                <EmptyState />
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

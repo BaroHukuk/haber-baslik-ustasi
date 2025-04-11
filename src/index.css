@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 221 83% 53%;
+    --primary: 214 100% 17.6%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -33,7 +33,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221 83% 53%;
+    --ring: 214 100% 17.6%;
 
     --radius: 0.5rem;
 
@@ -57,7 +57,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 214 100% 17.6%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -103,10 +103,12 @@
 
 .headline-card {
   transition: transform 0.2s ease-in-out;
+  border-left: 3px solid #00255A;
 }
 
 .headline-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 37, 90, 0.1);
 }
 
 .fade-in {
@@ -121,3 +123,4 @@
     opacity: 1;
   }
 }
+
