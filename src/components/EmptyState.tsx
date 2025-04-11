@@ -1,17 +1,28 @@
 
 import React from "react";
-import { Newspaper } from "lucide-react";
+import { Newspaper, FileText } from "lucide-react";
 
-const EmptyState: React.FC = () => {
+interface EmptyStateProps {
+  type?: "headline" | "news";
+}
+
+const EmptyState: React.FC<EmptyStateProps> = ({ type = "headline" }) => {
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
       <div className="bg-[#00255A]/10 p-4 rounded-full mb-4">
-        <Newspaper className="h-12 w-12 text-[#00255A]" />
+        {type === "headline" ? (
+          <FileText className="h-12 w-12 text-[#00255A]" />
+        ) : (
+          <Newspaper className="h-12 w-12 text-[#00255A]" />
+        )}
       </div>
-      <h3 className="text-xl font-medium mb-2 text-[#00255A]">Haber Başlığı Üreteci</h3>
+      <h3 className="text-xl font-medium mb-2 text-[#00255A]">
+        {type === "headline" ? "Haber Başlığı Üreteci" : "Haber İçeriği Üreteci"}
+      </h3>
       <p className="text-muted-foreground max-w-md">
-        Haber konunuzu girin, başlık stilinizi seçin ve Grok API anahtarınızı kullanarak 
-        yaratıcı haber başlıkları oluşturun.
+        {type === "headline" 
+          ? "Haber konunuzu girin, başlık stilinizi seçin ve Grok API anahtarınızı kullanarak yaratıcı haber başlıkları oluşturun."
+          : "Haber konunuzu girin, içerik stilinizi seçin ve Grok API anahtarınızı kullanarak profesyonel haber içerikleri oluşturun."}
       </p>
     </div>
   );

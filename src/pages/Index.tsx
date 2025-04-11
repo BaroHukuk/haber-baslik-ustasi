@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import HeadlineForm from "@/components/HeadlineForm";
 import HeadlineResults from "@/components/HeadlineResults";
 import EmptyState from "@/components/EmptyState";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import { useToast } from "@/components/ui/use-toast";
 
 const Index = () => {
@@ -15,7 +15,6 @@ const Index = () => {
   const handleSubmit = async (topic: string, style: string, apiKey: string) => {
     setIsLoading(true);
     try {
-      // Oluşturulacak prompt
       const prompt = `Sen yaratıcı bir haber editörüsün. Aşağıdaki konuya göre 5 Türkçe haber başlığı üret.  
 Stil: ${style}  
 Konu: ${topic}  
@@ -23,7 +22,6 @@ Kurallar:
 - Maksimum 90 karakter  
 - Sadece başlıklar, numaralandırılmış liste halinde`;
 
-      // Grok API isteği
       const response = await fetch("https://api.x.ai/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -52,7 +50,6 @@ Kurallar:
       const data = await response.json();
       const content = data.choices[0].message.content;
       
-      // Basit bir regex ile numaralı başlıkları ayıklayalım
       const headlineRegex = /\d+\.\s*(.*?)(?=\n\d+\.|\n*$)/gs;
       const extractedHeadlines: string[] = [];
       
@@ -63,7 +60,6 @@ Kurallar:
         }
       }
 
-      // Eğer regex ile düzgün ayıklayamazsak, satırlara bölerek deneyelim
       if (extractedHeadlines.length === 0) {
         const lines = content.split('\n').filter(line => line.trim());
         const filtered = lines.filter(line => /^\d+\./.test(line));
@@ -99,6 +95,7 @@ Kurallar:
 
   return (
     <div className="flex flex-col min-h-screen">
+      <Navigation />
       <div className="container mx-auto py-6 px-4 md:py-10 max-w-4xl flex-grow">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold tracking-tight text-[#00255A]">Haber Başlığı Ustası</h1>
@@ -125,7 +122,7 @@ Kurallar:
               {headlines.length > 0 ? (
                 <HeadlineResults headlines={headlines} />
               ) : (
-                <EmptyState />
+                <EmptyState type="headline" />
               )}
             </CardContent>
           </Card>
