@@ -42,7 +42,7 @@ const HeadlineForm: React.FC<HeadlineFormProps> = ({ onSubmit, isLoading }) => {
     if (!apiKey.trim()) {
       toast({
         title: "Hata",
-        description: "Lütfen Grok API anahtarı girin.",
+        description: "Lütfen X.AI (Grok) API anahtarı girin.",
         variant: "destructive",
       });
       return;
@@ -105,12 +105,12 @@ const HeadlineForm: React.FC<HeadlineFormProps> = ({ onSubmit, isLoading }) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="apiKey">Grok API Anahtarı</Label>
+        <Label htmlFor="apiKey">X.AI (Grok) API Anahtarı</Label>
         <div className="flex gap-2">
           <Input
             id="apiKey"
             type="password"
-            placeholder="API anahtarınızı girin"
+            placeholder="xai-XXX... ile başlayan API anahtarınızı girin"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             className="flex-1"
@@ -125,7 +125,8 @@ const HeadlineForm: React.FC<HeadlineFormProps> = ({ onSubmit, isLoading }) => {
           </Button>
         </div>
         <p className="text-sm text-muted-foreground">
-          API anahtarınız güvenli bir şekilde sadece istekleri göndermek için kullanılacaktır.
+          API anahtarınız güvenli bir şekilde sadece istekleri göndermek için kullanılacaktır. 
+          Anahtarınız x.ai'nin Grok API'si için geçerli olmalıdır (xai- ile başlayan).
         </p>
       </div>
 

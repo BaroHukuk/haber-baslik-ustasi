@@ -24,14 +24,14 @@ Kurallar:
 - Sadece başlıklar, numaralandırılmış liste halinde`;
 
       // Grok API isteği
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      const response = await fetch("https://api.x.ai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: "llama3-8b-8192",
+          model: "grok-3-latest",
           messages: [
             {
               role: "user",
@@ -44,7 +44,9 @@ Kurallar:
       });
 
       if (!response.ok) {
-        throw new Error(`API hatası: ${response.status}`);
+        const errorData = await response.text();
+        console.error("API hata yanıtı:", errorData);
+        throw new Error(`API hatası: ${response.status} - ${errorData}`);
       }
 
       const data = await response.json();
