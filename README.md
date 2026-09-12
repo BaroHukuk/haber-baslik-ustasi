@@ -1,73 +1,107 @@
-# Welcome to your Lovable project
+# Haber Başlığı Ustası
 
-## Project info
+A Turkish-language web app that drafts news headlines and full article bodies
+with the x.ai Grok API. Built for newsroom workflows where a writer needs
+several headline options, or a structured first draft, in seconds.
 
-**URL**: https://lovable.dev/projects/c7759547-d6e4-46d8-8219-f72696840232
+**Status:** working prototype. Runs entirely in the browser — no backend.
 
-## How can I edit this code?
+## What it does
 
-There are several ways of editing your application.
+**Headline generator** — enter a topic, pick a tone, get headline options:
 
-**Use Lovable**
+| Tone | Use |
+|---|---|
+| `Clickbait` | Maximum curiosity gap |
+| `SEO uyumlu` | Keyword-forward, search-friendly |
+| `Nötr` | Plain, wire-service style |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c7759547-d6e4-46d8-8219-f72696840232) and start prompting.
+**Article generator** (`/haber-olustur`) — returns a structured draft, parsed
+into separate fields so each part can be copied on its own:
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Headline
+2. Spot (1–2 sentence summary)
+3. Intro paragraph
+4. At least two subheadings with body copy
+5. Four hashtags
 
-**Use your preferred IDE**
+## Running it locally
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requires Node.js and npm.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone https://github.com/Fibilisim-Tekno/haber-baslik-ustasi.git
+cd haber-baslik-ustasi
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Then open the dev server URL. You will need an **x.ai (Grok) API key** — the
+key starts with `xai-` and is entered in the app itself, not in a config file.
+The **Kaydet** button stores it in `localStorage` so you do not have to retype
+it.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## How it works
 
-**Use GitHub Codespaces**
+The browser calls `https://api.x.ai/v1/chat/completions` directly with the
+`grok-3-latest` model (`temperature: 0.7`, `max_tokens: 1500`). The prompt
+asks for the five numbered sections listed above, and the response is split
+into fields with regular expressions before rendering.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Known limitations
 
-## What technologies are used for this project?
+Being honest about these, because they matter if you plan to deploy it:
 
-This project is built with:
+- **The API key lives in the browser.** It is kept in `localStorage` and sent
+  from the client, so it is visible to anyone with access to the browser or
+  devtools. Fine for personal or internal use; for a public deployment the
+  call belongs behind a small server-side proxy.
+- **Output parsing is regex-based.** When the model deviates from the expected
+  numbered format, some fields come back empty rather than wrong — but they do
+  come back empty.
+- `index.html` sets `<base href="/haberbaslik/">`, so the build expects to be
+  served from that subpath. Change it if you deploy at a domain root.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Stack
 
-## How can I deploy this project?
+Vite · React · TypeScript · Tailwind CSS · shadcn/ui · React Router
 
-Simply open [Lovable](https://lovable.dev/projects/c7759547-d6e4-46d8-8219-f72696840232) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+<details>
+<summary>🇹🇷 Türkçe</summary>
 
-Yes it is!
+## Ne işe yarıyor
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+x.ai Grok API'si ile Türkçe haber başlığı ve haber metni üreten bir web
+uygulaması. Tamamen tarayıcıda çalışır, sunucu gerektirmez.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- **Başlık üretici** — konu girin, stil seçin (Clickbait / SEO uyumlu /
+  Nötr), başlık seçenekleri alın.
+- **Haber içeriği üretici** — başlık, spot, giriş, en az iki alt başlık ve
+  dört etiket olarak ayrı ayrı kopyalanabilir bir taslak üretir.
+
+## Kurulum
+
+```sh
+git clone https://github.com/Fibilisim-Tekno/haber-baslik-ustasi.git
+cd haber-baslik-ustasi
+npm install
+npm run dev
+```
+
+`xai-` ile başlayan bir x.ai (Grok) API anahtarı gerekiyor. Anahtar
+uygulama içinden giriliyor, **Kaydet** ile `localStorage`'a kaydediliyor.
+
+## Bilinen sınırlar
+
+- **API anahtarı tarayıcıda tutuluyor.** `localStorage`'da saklanıyor ve
+  istek istemciden gidiyor; yani tarayıcıya erişen biri anahtarı görebilir.
+  Kişisel kullanım için sorun değil, ancak herkese açık bir yayında isteğin
+  sunucu tarafında bir proxy arkasına alınması gerekir.
+- **Çıktı regex ile ayrıştırılıyor.** Model beklenen numaralı formatın
+  dışına çıktığında bazı alanlar boş gelebilir.
+- `index.html` içinde `<base href="/haberbaslik/">` tanımlı; alan adının
+  kökünde yayınlayacaksanız bunu değiştirin.
+
+</details>
